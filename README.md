@@ -1,8 +1,10 @@
 # Instagram Followers Updates
 
-Thanks to a scraping method, stay informed about who unfollows you or doesn't follow you back, etc...
+Some tests based on scraping and collecting data from HTML.
+I wanted to automate the connection to Instagram but couldn't reproduce the whole process without getting blocked...
+So, if you'll excuse me, the data collection is done manually by copying the HTML element containing all the followers.
 
-Beware, it's a bit manual. I coded this in an afternoon just to practice scraping info.
+Later I'd like to make the tool work simply by downloading the full HTML page, but I don't have the time at the moment.
 
 ## Getting started
 
@@ -25,41 +27,47 @@ but click on "following".
 
 ## Example of use
 
+### Global updates
 ```py
-if __name__ == "__main__":
-    # get files
-    followers_at_time_A = "followers_A.html"
-    followers_at_time_B = "followers_B.html"
-    following = "following.html"
-    tracker = InstagramFollowTracker()
+tracker = InstagramFollowTracker()
 
-    # global updates
-    new_followers, old_followers = tracker.see_updates(followers_at_time_A,
-                                                       followers_at_time_B)
-    print(f"{len(new_followers)} people followed you:\n", new_followers)
-    print(f"{len(old_followers)} people unfollowed you:\n", old_followers)
+new_followers, old_followers = tracker.see_updates("followers_A.html",
+                                                   "followers_B.html")
 
-    # statistics
-    friends = tracker.following_back(followers_at_time_B, following)
-    print(f"You follow {len(friends)} people who follow you back")
-
-    not_following_back_users = tracker.not_following_back(followers_at_time_B,
-                                                          following)
-    print(f"{len(not_following_back_users)} users don't follow you back :\n",
-          not_following_back_users)
+print(f"{len(new_followers)} people followed you:\n", new_followers)
+print(f"{len(old_followers)} people unfollowed you:\n", old_followers)
 ```
-
-_Output:_
-
 ```bash
 3 people followed you:
  ['user_01', 'user_06', 'user_56']
 
 2 people unfollowed you:
  ['user_76', 'user_45']
+```
 
+### The number of people you follow who follow you back
+```py
+tracker = InstagramFollowTracker()
+
+friends = tracker.following_back("followers_B.html", "following.html")
+
+print(f"You follow {len(friends)} people who follow you back")
+```
+```bash
 You follow 462 people who follow you back
+```
 
+### Users who don't follow you back
+```py
+tracker = InstagramFollowTracker()
+
+not_following_back_users = tracker.not_following_back("followers_B.html",
+                                                      "following.html")
+
+print(f"{len(not_following_back_users)} users don't follow you back :\n",
+      not_following_back_users)
+```
+```bash
 120 users don't follow you back :
  ['user90', ..., user_128]
  ```
