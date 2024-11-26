@@ -43,20 +43,20 @@ class InstagramFollowTracker():
 
 if __name__ == "__main__":
     # get files
-    followers_at_time_A = "followers_02.html"
-    followers_at_time_B = "followers_240726.html"
-    following = "following.html"
+    followers_at_time_A = r"C:\Users\giand\OneDrive\Documents\__packages__\_perso\followers_240726.html"
+    followers_at_time_B = r"C:\Users\giand\OneDrive\Documents\__packages__\_perso\followers_241126.html"
+    following = r"C:\Users\giand\OneDrive\Documents\__packages__\_perso\following_241126.html"
     tracker = InstagramFollowTracker()
 
     # global updates
     new_followers, old_followers = tracker.see_updates(followers_at_time_A,
                                                        followers_at_time_B)
-    print(f"{len(new_followers)} people followed you:\n", new_followers)
-    print(f"{len(old_followers)} people unfollowed you:\n", old_followers)
+    print(f"{len(new_followers)} people followed you:\n", new_followers, "\n")
+    print(f"{len(old_followers)} people unfollowed you:\n", old_followers, "\n")
 
     # statistics
     friends = tracker.following_back(followers_at_time_B, following)
-    print(f"You follow {len(friends)} people who follow you back")
+    print(f"You follow {len(friends)} people who follow you back", "\n")
 
     not_following_back_users = tracker.not_following_back(followers_at_time_B,
                                                           following)
